@@ -59,5 +59,7 @@ class KnnClassifier:
         votes = Counter(topK_y)
         return votes.most_common(1)[0][0]
 
+    def score(self, X_test, y_test):
+
     def __repr__(self):
         return "Knn(k=%d)" % self.k
