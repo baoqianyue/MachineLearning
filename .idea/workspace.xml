@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2b04a55-b216-4484-a5fd-2f1f7ceda041" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/K近邻算法/.ipynb_checkpoints/06-the-grid-search-hyper-parameter-checkpoint.ipynb" afterPath="$PROJECT_DIR$/K近邻算法/.ipynb_checkpoints/06-the-grid-search-hyper-parameter-checkpoint.ipynb" />
-      <change beforePath="$PROJECT_DIR$/K近邻算法/06-the-grid-search-hyper-parameter.ipynb" afterPath="$PROJECT_DIR$/K近邻算法/06-the-grid-search-hyper-parameter.ipynb" />
-    </list>
+    <list default="true" id="c2b04a55-b216-4484-a5fd-2f1f7ceda041" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
