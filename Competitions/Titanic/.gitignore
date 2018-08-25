@@ -1,0 +1,6 @@
+# Created by https://www.gitignore.io/api/pycharm+all,jupyternotebook
+
+dataset/
+### JupyterNotebook ###
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
