@@ -174,4 +174,3 @@ the distance between [[7 8]] and [[ 9 10]] -> [2.828427]
 
 
 
-
