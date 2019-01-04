@@ -75,7 +75,8 @@ with tf.control_dependencies([a, b, c]):
 
     这个参数表示在卷积过程中是否用0来填充边界，这样可以保证图像输出尺寸在步幅参数设定为1的情况下保持不变，通过设定padding='SAME',图像会用0来填充边界(输出尺寸不变)，如果设定padding='VALID'则不会进行填充。     
 
-    对于任意给定的步幅S，滤波器尺寸K，图像尺寸W，padding尺寸P，可以确定输出图像尺寸：        
+    对于任意给定的步幅S，滤波器尺寸K，图像尺寸W，padding尺寸P，可以确定输出图像尺寸：    
+
     $$O = 1 + (W - K + 2P)/S$$        
 
 ### tf.get_collection(tf.GraphKeys.UPDATE_OPS)      
@@ -87,7 +88,23 @@ with tf.control_dependencies([a, b, c]):
 update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
 with tf.control_dependencies(update_ops):#保证train_op在update_ops执行之后再执行
     train_op = optimizer.minimize(loss)
-```        
+```          
+
+### tf.contrib.training.HParams      
+
+用于保存一组超参数作为`key-value`的类   
+
+该类对象拥有用于构建和训练模型的超参数,这些超参数作为对象的属性,可以直接访问    
+
+```python
+hparams = HParams(learing_rate=1.0, num_hidden_units=100)    
+
+# the hyperparameter are available as attributes of Hparams object  
+hparams.learning_rate ==> 0.1
+hparams.num_hidden_units ==> 100   
+```  
+
+还可以通过`parse()`方法来覆盖超参数值    
 
 
 

@@ -1,4 +1,8 @@
-# 生成对抗网络      
+# 生成对抗网络 Generative Adversarial Network        
+
+>  Goodfellow在2014年提出,他曾是Yoshua Bengio的学生      
+
+> Yan LeCun 称赞GAN是"过去十年机器学习领域最有意思的想法"    
 
 这个网络需要同时训练两个模型，一个能够捕获数据分布的生成模型G，一个能够估计数据来源于真实样本概率的判别模型D     
 
@@ -14,10 +18,24 @@
 其实极小极大博弈可以分开来看，即在给定G的情况下先最大化V(D,G)而获得D，然后固定D，并最小化V(D,G)而得到G，其中，给定G，最大化V(D,G)评估了P_g和P_data之间的差异或距离       
 
 
-## DCGAN       
+## DCGAN(Deep Convolutional Generative Adversarial Network)    
+![dcgan](./image/dcgan.png)        
 
-![dcgan](./image/dcgan.png)      
+### 模型结构     
 
+* 1.Pooling层使用Convolution层代替(因为是从随机的少量数据来生成图片,使用池化层会丢失信息)     
+    * D上使用strided convolution     
+    * G上使用fractional-strided convolution(间隔关键点反卷积层)   
+
+* 2.G和D都是用batch normailzation   
+    * 可以帮助解决初始化数据较差的问题  
+    * 可以使梯度传播到每一层,防止出现梯度弥散现象   
+    * BN不应用于输入层和输出层(调参经验)       
+    * 在D中移除了全连接层,采用了像ResNet中的global pooling    
+    * G上除了输出层使用tanH以外其他都是用Relu     
+    * D上使用leakyRelu      
+
+ 
 ### 生成器    
 
 * 生成器网络有4个卷积层，除输出层外，其他所有层都紧接着批归一化(BN)和线性修正单元(ReLU)进行激活      
@@ -48,7 +66,6 @@
 
     最终的输出尺寸有训练集图像的大小确定，如果使用Mnist数据集进行训练，则会生成28x28的灰度图像     
 
-* 
 
 
 
