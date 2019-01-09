@@ -40,7 +40,8 @@
 
 * 1.Pooling层使用Convolution层代替(因为是从随机的少量数据来生成图片,使用池化层会丢失信息)     
     * D上使用strided convolution     
-    * G上使用fractional-strided convolution(间隔关键点反卷积层)   
+    * G上使用fractional-strided convolution(间隔关键点反卷积层)
+        fractional-strided convolution也可以叫做deconvolution       
 
 * 2.G和D都是用batch normailzation   
     * 可以帮助解决初始化数据较差的问题  
@@ -48,7 +49,7 @@
     * BN不应用于输入层和输出层(调参经验)       
     * 在D中移除了全连接层,采用了像ResNet中的global pooling    
     * G上除了输出层使用tanH以外其他都是用Relu     
-    * D上使用leakyRelu      
+    * D上使用leakyRelu,leakyRelu的斜率为0.2     
 
  
 ### 生成器    
