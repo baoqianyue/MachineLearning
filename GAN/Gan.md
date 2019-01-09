@@ -19,7 +19,22 @@
 
 
 ## DCGAN(Deep Convolutional Generative Adversarial Network)    
-![dcgan](./image/dcgan.png)        
+![dcgan](./image/dcgan.png)         
+
+### 反卷积和卷积    
+
+* 卷积   
+    ![img](./image/convolution.png)    
+    从图中的下层计算得到上层的操作   
+    从矩阵运算的角度思考,将输入的4x4图像展开成16x1的矩阵X,然后将卷积核运算也展开,是4x16的一个矩阵C,卷积操作就是$Y = CX$,得到4x1的一个输出   
+
+* 反卷积     
+    ![img](./image/transconvolution.png)  
+    对下层的2x2的单元进行padding,因为输出是4x4,所以做两个单位的padding,然后使用3x3的卷积核,步长为1   
+    反卷积是卷积的逆过程,上面卷积的输入是4x4,输出是4x1    
+    反卷积的输入就是4x1,输出是16x1     
+    从矩阵运算的角度思考,反卷积操作就是$Y = C^TX$,这里X是输入4x1,$C^T$是卷积核运算展开C的转置,size为16x4,最后就可以得到反卷积输出为16x1    
+
 
 ### 模型结构     
 
