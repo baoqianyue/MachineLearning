@@ -4,6 +4,9 @@
 ./local_run
 .local_run
 */.local_run/*
+./ouyang1
+.ouyang1
+*/.ouyang1/* 
 ### JupyterNotebook ###
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
