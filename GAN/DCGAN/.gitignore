@@ -4,9 +4,8 @@
 ./local_run
 .local_run
 */.local_run/*
-./ouyang1
-.ouyang1
-*/.ouyang1/* 
+./gen_calligraphy
+.gen_calligraphy
 ### JupyterNotebook ###
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
