@@ -49,7 +49,25 @@
     * BN不应用于输入层和输出层(调参经验)       
     * 在D中移除了全连接层,采用了像ResNet中的global pooling    
     * G上除了输出层使用tanH以外其他都是用Relu     
-    * D上使用leakyRelu,leakyRelu的斜率为0.2     
+    * D上使用leakyRelu,leakyRelu的斜率为0.2       
+
+## 训练细节   
+
+* 除了将图像像素值规划到[-1, 1]之间为了tanh激活函数做准备之外没有其他的预处理      
+* 所有模型都使用mini-batch stochastic gradient desent(SGD)训练,mini-batch的大小是128    
+* 所有的参数被初始化都使用0为均值,0.02为标准方差的标准正态分布       
+* LeakyReLU的斜率为0.2     
+* 之前的GAN使用动量加快收敛速度,这里使用Adam optimizer,learning_rate使用0.0002,动量参数β1使用0.5        
+
+## 测试    
+
+* LSUN   
+    paper中提到在Large-scale Scene Understanding数据集上选取了至少三百万张图片进行训练   
+
+* 论文中一直在强调DCGAN是真正学习到了语义特征而不是只是记住了图片,通过调整初始输入向量来探索隐空间是如何影响最终图像的生成,还可以观察到图像特征是如何折叠到隐空间中的      
+
+
+
 
  
 ### 生成器    
