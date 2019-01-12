@@ -12,7 +12,10 @@
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 MNIST_data/
-/MNIST_data 
+/MNIST_data  
+
+/__pycache__  
+/_pycache_
 
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/
