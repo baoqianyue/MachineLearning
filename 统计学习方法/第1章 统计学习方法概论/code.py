@@ -1,7 +1,6 @@
 # 使用最小二乘法拟合曲线
 # 最小化残差平方和(L2范数)
 import numpy as np
-import scipy as sp
 from scipy.optimize import leastsq
 import matplotlib.pyplot as plt
 
@@ -64,6 +63,34 @@ def fitting(x, y, x_points, M=0):
     return p_lsq
 
 
+def residual_with_regularization(p, x, y, regularization=0.0001):
+    """
+    在误差计算时加上正则项
+    :param p:
+    :param x:
+    :param y:
+    :return:
+    """
+    # 计算基本误差
+    res = fit_fun(p, x) - y
+    # 加上正则项
+    res = np.append(res, np.sqrt(0.5 * regularization * np.square(p)))
+    return res
+
+
+def fitting_with_regularization(x, y, x_points, M):
+    # 随机初始化各项的系数，M + 1代表初始化偏置项常数
+    p_init = np.random.rand(M + 1)
+    p_lsq_with_regularization = leastsq(residual_with_regularization, p_init, args=(x, y))
+    plt.plot(x_points, goal_fun(x_points), label='goal')
+    plt.plot(x_points, fit_fun(p_lsq_9[0], x_points), label='fitted curve')
+    plt.plot(x_points, fit_fun(p_lsq_with_regularization[0], x_points), label='regularization')
+    plt.plot(x, y, 'ro', label='noise')
+    plt.legend()
+    plt.show()
+    return p_lsq_with_regularization
+
+
 if __name__ == '__main__':
     # 给定10个数据点
     x = np.linspace(0, 1, 10)
@@ -80,3 +107,5 @@ if __name__ == '__main__':
     p_lsq_3 = fitting(x, y, x_points, M=3)
     # M = 9
     p_lsq_9 = fitting(x, y, x_points, M=9)
+    # with regularization
+    p_lsq_regularization = fitting_with_regularization(x, y, x_points, M=9)

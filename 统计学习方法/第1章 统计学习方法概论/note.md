@@ -189,5 +189,119 @@ M=9的拟合结果：
     * 随着多项式次数(模型复杂度)的增加，训练误差会逐渐减小，一直趋近于0，但是测试误差会先减小然后再增大，**但是我们的目标是让训练误差较小时，测试误差也较小，这就需要用到模型的选择方法**  
 
 
-### 正则化和交叉验证   
+### 正则化和交叉验证     
 
+上例中当提高超参数M的值，会发生越来越严重的过拟合现象，也就是测试误差会先减小后增大，所以我们是要使用模型选择方法来寻找到使得测试误差较小的模型  
+
+这里先使用正则化     
+
+* 正则化(regularization)   
+
+    正则化是结构化风险最小化策略的实现，就是在经验风险上加上一个惩罚项(penalty term)     
+
+    正则化项通常是模型复杂度的单调递增函数，模型越复杂，正则化值越大，比如正则化项可以是模型参数向量的范数      
+
+    正则化的一般形式为：   
+
+    $$min \frac{1}{N} \sum_{i=1}^{N}L(y_i,f(x_i)) + \lambda{J(f)}$$    
+
+    其中第一项是经验风险(训练误差),第二项是正则化项，`λ>=0`为调整两者之间关系的系数    
+
+    正则化项可以取不同的形式，比如回归问题中，损失函数是平方损失，正则化项就可以是参数向量`ω`的L2范数   
+
+    $$L(\omega) = \frac{1}{N} \sum_{i=1}^{N}(f(x_i;\omega) - y_i)^2 + \frac{\lambda}{2}||\omega||^2$$
+
+    这里`||ω||`是参数向量的L2范数    
+
+    **上式的形式代表了当前的损失函数，第一项代表了当前的经验风险，经验风险较小的模型可以较复杂(拥有很多的非零参数),这时，第二项的模型复杂度(参数向量的范数)会较大，正则化的作用就是选择经验风险与模型复杂度同时较小的模型**   
+
+    正则化符合奥卡姆剃刀(Occam's razor)原理      
+
+    > entia non sunt multiplicanda praeter nesessitatem (如无必要勿增实体)   
+
+    正则化项对应于模型的先验概率    
+
+    下面给上面的实例应用正则化，降低模型的过拟合程度     
+
+    ```python
+    def residual_with_regularization(p, x, y, regularization=0.0001):
+        """
+        在误差计算时加上正则项
+        :param p:
+        :param x:
+        :param y:
+        :return:
+        """
+        # 计算基本误差
+        res = fit_fun(p, x) - y
+        # 加上正则项
+        res = np.append(res, np.sqrt(0.5 * regularization * np.square(p)))
+        return res
+
+
+    def fitting_with_regularization(x, y, x_points, M):
+        # 随机初始化各项的系数，M + 1代表初始化偏置项常数
+        p_init = np.random.rand(M + 1)
+        p_lsq_with_regularization = leastsq(residual_with_regularization, p_init, args=(x, y))
+        plt.plot(x_points, goal_fun(x_points), label='goal')
+        plt.plot(x_points, fit_fun(p_lsq_9[0], x_points), label='fitted curve')
+        plt.plot(x_points, fit_fun(p_lsq_with_regularization[0], x_points), label='regularization')
+        plt.plot(x, y, 'ro', label='noise')
+        plt.legend()
+        plt.show()
+        return p_lsq_with_regularization
+    ```  
+
+    加上正则项后的拟合效果：  
+    ![withreg](img/withreg.png)   
+
+
+* 交叉验证(Cross Validation)      
+
+    当给定的样本数据较为充足时，可以将全部样本按照一定比例切分成三部分，分别为训练集(training set),验证集(validation set),测试集(test set)    
+
+    训练集用来训练模型，验证集用来进行模型的选择，测试集用来评估模型   
+
+    但是很多实际情况中的样本容量很小，直接对全部样本进行切分并不能得到较好的效果，所以要对切分后的各部分再进行组合   
+
+    * K折交叉验证(K-fold cross validation)     
+
+        首先将所给全部数据其分成K个互不相交的大小相同的子集，然后使用K-1个子集的数据训练模型，利用余下的子集测试模型    
+
+        然后将这个过程对所有可能的K种选择重复进行，最后选出K次评测中平均测试误差最小的一个模型   
+
+
+### 分类问题的评估标准   
+
+分类是监督学习中的一个核心问题，在监督学习中，数据变量Y取值为有限个离散值时，预测问题就变成了分类问题   
+
+评价分类模型的指标一般是分类准确率(accuracy)，给定测试数据集，分类器正确分类的样本数和总样本数的比值    
+
+这里说明一下二类分类问题的常用评价指标     
+分类器在同一个测试集上进行预测可能出现以下四种情况：   
+
+* TP 将正类分类成正类      
+* FN 将正类分类成负类      
+* FP 将负类分类成正类     
+* TN 将负类分类成负类      
+
+二分类问题中常用的评价指标是精确率和召回率      
+
+* 精确率(precision)    
+
+    $$P = \frac{TP}{TP + FP}$$     
+
+* 召回率(recall)    
+
+    $$R = \frac{TP}{TP + FN}$$     
+
+* F1值    
+    是精确率和召回率的调和均值   
+
+    $$
+    \frac{2}{F_1} = \frac{1}{P} + \frac{1}{R}    \\    
+    F_1 = \frac{2TP}{2TP + FP + FN}
+    $$  
+
+当精确率和召回率都高时，F1值也会高   
+ 
