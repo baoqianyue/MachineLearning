@@ -77,4 +77,32 @@ $$L(\omega,b) = -\sum_{x_i \in {M}}y_i(\omega{x_i} + b)$$
 
 这个损失函数就是感知机学习经验风险函数    
 
+## 学习算法   
 
+感知机模型学习算法转换为求解损失函数的最优化问题，使用随机梯度下降法(stochastic gradient descent)      
+
+最优化下式：   
+
+$$min_{\omega, b}L(\omega,b) = -\sum_{x_i \in M}y_i(\omega{x_i}+b)$$   
+
+其中M为误分类点集合，求解最优参数`ω`和`b`    
+
+损失函数L(ω，b)的梯度为：   
+
+$$\bigtriangledown_{\omega}L(\omega,b) = -\sum_{x_i \in M}y_ix_i$$  
+
+$$\bigtriangledown_{b}L(\omega, b) = -\sum_{x_i \in M}y_i$$  
+
+然后随机选取一个误分类点，对两个参数进行更新：   
+
+$$\omega = \omega + \eta{y_ix_i}$$   
+
+$$b = b + \eta{y_i}$$   
+
+其中`η`为学习率(learning rate)，通过调整两个参数的值，使超平面向误分类点的一侧移动，直到误分类点被正确分类。   
+
+使用scikit-learn中的`iris`中的两个类别并且只取两个特征(sepal length, sepal width)实现一个感知机模型    
+
+```python
+
+```
