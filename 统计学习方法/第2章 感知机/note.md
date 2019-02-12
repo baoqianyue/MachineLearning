@@ -217,16 +217,16 @@ if __name__ == '__main__':
 ```python
 from sklearn.linear_model import Perceptron as skPerceptron
 model = skPerceptron(fit_intercept=False, max_iter=1000, shuffle=False)
-    model.fit(X, y)
-    # 可视化
-    x_points = np.linspace(4, 7, 10)
-    y = -(model.coef_[0][0] * x_points + model.intercept_) / model.coef_[0][1]
-    plt.plot(x_points, y)
-    plt.plot(X[:50, 0], X[:50, 1], 'bo', label='0')
-    plt.plot(X[50:, 0], X[50:, 1], 'bo', color='green', label='1')
-    plt.xlabel('sepal length')
-    plt.ylabel('sepal width')
-    plt.show()
+model.fit(X, y)
+# 可视化
+x_points = np.linspace(4, 7, 10)
+y = -(model.coef_[0][0] * x_points + model.intercept_) / model.coef_[0][1]
+plt.plot(x_points, y)
+plt.plot(X[:50, 0], X[:50, 1], 'bo', label='0')
+plt.plot(X[50:, 0], X[50:, 1], 'bo', color='green', label='1')
+plt.xlabel('sepal length')
+plt.ylabel('sepal width')
+plt.show()
 ```  
 
 分类结果：  
