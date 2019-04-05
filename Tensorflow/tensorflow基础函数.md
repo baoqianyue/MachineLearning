@@ -2,7 +2,8 @@
 
 ### tf.argmax()   
 
-类似于`np.argmax()`,返回最大数值所在的下标      
+类似于`np.argmax()`,返回最大数值所在的下标    
+当axis=1时返回每列最大值的下标，当axis=0时返回每行最大值的下标   
 
 ### tf.equal()    
 
@@ -104,7 +105,30 @@ hparams.learning_rate ==> 0.1
 hparams.num_hidden_units ==> 100   
 ```  
 
-还可以通过`parse()`方法来覆盖超参数值    
+还可以通过`parse()`方法来覆盖超参数值      
+
+### tf.cond   
+
+用于实现条件控制数据流向，相当于if-else    
+
+函数原型：  
+```python
+tf.cond(pred, fn1, fn2, name=None);  
+```  
+这里fn1和fn2是两个函数，pred会返回True或者False    
+当pred返回True时，返回fn1函数执行的结果   
+当pred返回False时，返回fn2函数执行的结果   
+
+```python
+# 这里要区分是训练过程中的bn还是测试时的bn
+# 使用cond来进行判断，cond的第一个参数是一个逻辑表达式
+# 返回为true时，执行后面第一个函数，否则执行后面第二个函数
+# bn在train过程中，mean和var都是计算当前batch的   
+# bn在test过程中，输入的是单个data，这时bn计算用到的mean和var可以由整个数据集的代替
+# 或者使用每次train中每个batch的均值来代替
+mean, var = tf.cond(train_phase, mean_var_with_update(),
+               lambda: (ema.average(batch_mean), ema.average(batch_var)))
+```
 
 
 
