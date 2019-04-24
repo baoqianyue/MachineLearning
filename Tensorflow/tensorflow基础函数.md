@@ -36,7 +36,13 @@ print(sess.run(b))
 输出：    
 ```
 [True, False, False, True, True]
-```     
+```      
+
+### tf.argmax, tf.equal, tf.cast, tf.one_hot, tf.reduce_mean整合计算预测的准确度   
+
+[博客](https://blog.csdn.net/liuxiao214/article/details/78999444)   
+
+
 
 ### tf.truncated_normal()   
 
@@ -129,9 +135,3 @@ tf.cond(pred, fn1, fn2, name=None);
 mean, var = tf.cond(train_phase, mean_var_with_update(),
                lambda: (ema.average(batch_mean), ema.average(batch_var)))
 ```
-
-
-
-
-
-
