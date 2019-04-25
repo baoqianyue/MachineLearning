@@ -51,6 +51,8 @@ AlexNet、VGG、ResNet、Inception、MobileNet
 
 ## VGGNet(2014)      
 
+该网络被提出的目的是为了探究在大规模图像识别任务中，卷积网络深度对模型精确度到底有何影响。     
+
 * 网络结构      
 
     * 层次更深   
