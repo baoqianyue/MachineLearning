@@ -65,7 +65,7 @@ class LogisticRegression:
         # 参数矩阵
         self.coef_ = self._theta[1:]
         # 偏置项，截距
-        self.intercept_ = self._theta[0]
+        self.intercept_ = self._theta[0]    
         return self
 
     def predict_proba(self, X_predict):
