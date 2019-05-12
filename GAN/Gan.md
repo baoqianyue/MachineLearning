@@ -125,7 +125,9 @@ GAN的缺点：
 
 
 
-## CycleGAN   
+## CycleGAN     
+
+### 概述   
 
 该网络使用无监督训练(Unsupervised training)方式。  
 
@@ -146,5 +148,28 @@ $$
 
 $$
 y -> F(y) -> G(F(y)) = y  
-$$
+$$    
+
+### 网络结构和损失函数   
+
+* 生成器使用残差网络，判别器使用PatchGAN   
+* 一共有两个生成器(G, F)和两个判别器($D_Y$, $D_X$)   
+    * G将X domain的图像转换成Y domain    
+    * F将Y domain的图像转成成X domain    
+    * $D_X$判别X domain中的图像真假  
+    * $D_Y$判别Y domain中的图像真假    
+* 损失函数共有三项     
+    * 对于映射G，有一个对抗损失   
+    * 对于映射F，有一个对抗损失  
+    * 网络核心，cycle consistency loss，使用L1 loss来计算   
+        使用该loss可以有效的减少不合理的映射。      
+
+### 训练细节    
+
+
+### CycleGAN 的缺点    
+
+
+    
+
 
