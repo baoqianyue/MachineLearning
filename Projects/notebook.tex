@@ -1,0 +1,658 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{DecisionTreeIrisClassification}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{决策树实现鸢尾花分类}\label{ux51b3ux7b56ux6811ux5b9eux73b0ux9e22ux5c3eux82b1ux5206ux7c7b}
+
+\subsection{1607104130 鲍骞月}\label{ux9c8dux9a9eux6708}
+
+    \subsubsection{作业内容：}\label{ux4f5cux4e1aux5185ux5bb9}
+
+\begin{itemize}
+\tightlist
+\item
+  自己实现ID3方式建树
+
+  \begin{itemize}
+  \tightlist
+  \item
+    1.加载数据,数据可视化\\
+  \item
+    2.数据切分
+  \item
+    3.实现决策树类\\
+  \item
+    4.模型训练\\
+  \item
+    5.模型评估,计算测试集分类准确度\\
+  \end{itemize}
+\item
+  使用sklearn中的CART方式建树
+
+  \begin{itemize}
+  \tightlist
+  \item
+    1.加载数据\\
+  \item
+    2.特征选取\\
+  \item
+    3.模型训练\\
+  \item
+    4.模型评估，绘制分类决策边界
+  \end{itemize}
+\end{itemize}
+
+    \subsubsection{1.自己实现ID3方式建树}\label{ux81eaux5df1ux5b9eux73b0id3ux65b9ux5f0fux5efaux6811}
+
+    \paragraph{1.1
+加载数据，数据可视化}\label{ux52a0ux8f7dux6570ux636eux6570ux636eux53efux89c6ux5316}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{datasets}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+        \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{log}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{c+c1}{\PYZsh{} 加载数据}
+         \PY{n}{iris} \PY{o}{=} \PY{n}{datasets}\PY{o}{.}\PY{n}{load\PYZus{}iris}\PY{p}{(}\PY{p}{)}
+         \PY{n}{X} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{data}
+         \PY{n}{X\PYZus{}s} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}
+         \PY{n}{y\PYZus{}s} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{target}
+         \PY{n}{y} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{target}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{c+c1}{\PYZsh{} 绘制数据分布情况   }
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}s}\PY{p}{[}\PY{n}{y\PYZus{}s}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}s}\PY{p}{[}\PY{n}{y\PYZus{}s}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}s}\PY{p}{[}\PY{n}{y\PYZus{}s}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}s}\PY{p}{[}\PY{n}{y\PYZus{}s}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X\PYZus{}s}\PY{p}{[}\PY{n}{y\PYZus{}s}\PY{o}{==}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X\PYZus{}s}\PY{p}{[}\PY{n}{y\PYZus{}s}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{1.2
+数据切分，并生成一个DataFrame}\label{ux6570ux636eux5207ux5206ux5e76ux751fux6210ux4e00ux4e2adataframe}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}122}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+          
+          \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{777}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(112, 4) (112,) (38, 4) (38,)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{c+c1}{\PYZsh{} 生成一个训练用的dataframe}
+         \PY{n}{features} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{feature\PYZus{}names}
+         \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{n}{df} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{)}
+         \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{features}\PY{p}{]}
+         \PY{n}{labels}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{train\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{labels}\PY{p}{)}
+         \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}56}]:}    sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)  \textbackslash{}
+         0                4.9               2.4                3.3               1.0   
+         1                4.6               3.4                1.4               0.3   
+         2                4.4               3.2                1.3               0.2   
+         3                6.3               2.7                4.9               1.8   
+         4                5.5               2.6                4.4               1.2   
+         
+            label  
+         0    1.0  
+         1    0.0  
+         2    0.0  
+         3    2.0  
+         4    1.0  
+\end{Verbatim}
+            
+    \paragraph{1.3 实现决策树类}\label{ux5b9eux73b0ux51b3ux7b56ux6811ux7c7b}
+
+使用ID3算法生成
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}139}]:} \PY{k}{class} \PY{n+nc}{Node}\PY{p}{:}
+              \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{root}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{feature\PYZus{}name}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{feature}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{root} \PY{o}{=} \PY{n}{root}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{label} \PY{o}{=} \PY{n}{label}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{feature\PYZus{}name} \PY{o}{=} \PY{n}{feature\PYZus{}name}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{feature} \PY{o}{=} \PY{n}{feature}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tree} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{result} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{label}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{feature}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{feature}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tree}\PY{p}{\PYZcb{}}
+          
+              \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}repr\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{result}
+              
+              \PY{k}{def} \PY{n+nf}{insert\PYZus{}node}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{value}\PY{p}{,} \PY{n}{node}\PY{p}{)}\PY{p}{:}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tree}\PY{p}{[}\PY{n}{value}\PY{p}{]} \PY{o}{=} \PY{n}{node}
+              
+              \PY{k}{def} \PY{n+nf}{predict}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{features}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{root} \PY{o+ow}{is} \PY{k+kc}{True}\PY{p}{:}
+                      \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{label}
+                  \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tree}\PY{p}{[}\PY{n}{features}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{feature}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+              
+          \PY{k}{class} \PY{n+nc}{DecisionTree}\PY{p}{:}
+              \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{epsilon}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{)}\PY{p}{:}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}tree} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{epsilon} \PY{o}{=} \PY{n}{epsilon}
+              
+              \PY{c+c1}{\PYZsh{} 计算信息熵}
+              \PY{n+nd}{@staticmethod}
+              \PY{k}{def} \PY{n+nf}{entropy}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{data\PYZus{}length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+                  \PY{n}{label\PYZus{}count} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                  \PY{c+c1}{\PYZsh{} 首先统计数据分类情况，然后计算信息熵}
+                  \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{data\PYZus{}length}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{label} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+                      \PY{k}{if} \PY{n}{label} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{label\PYZus{}count}\PY{p}{:}
+                          \PY{n}{label\PYZus{}count}\PY{p}{[}\PY{n}{label}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+                      \PY{n}{label\PYZus{}count}\PY{p}{[}\PY{n}{label}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                  \PY{n}{ent} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n+nb}{sum}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{p}\PY{o}{/}\PY{n}{data\PYZus{}length}\PY{p}{)}\PY{o}{*}\PY{n}{log}\PY{p}{(}\PY{n}{p}\PY{o}{/}\PY{n}{data\PYZus{}length}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{label\PYZus{}count}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{return} \PY{n}{ent}
+              
+              \PY{c+c1}{\PYZsh{} 计算经验条件熵}
+              \PY{k}{def} \PY{n+nf}{condition\PYZus{}entropy}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                  \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{        给定一个特征，计算此时的经验条件熵}
+          \PY{l+s+sd}{        axis就是给定的特征对应的index}
+          \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                  \PY{n}{data\PYZus{}length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+                  \PY{n}{features} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+                  \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{data\PYZus{}length}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{feature} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{axis}\PY{p}{]}
+                      \PY{k}{if} \PY{n}{feature} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{features}\PY{p}{:}
+                          \PY{n}{features}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                      \PY{n}{features}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{condition\PYZus{}ent} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{o}{/}\PY{n}{data\PYZus{}length}\PY{p}{)}\PY{o}{*}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{entropy}\PY{p}{(}\PY{n}{p}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{features}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{return} \PY{n}{condition\PYZus{}ent}
+              
+              \PY{c+c1}{\PYZsh{} 计算信息增益 }
+              \PY{n+nd}{@staticmethod}
+              \PY{k}{def} \PY{n+nf}{gain}\PY{p}{(}\PY{n}{entropy}\PY{p}{,} \PY{n}{condition\PYZus{}entropy}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{return} \PY{n}{entropy} \PY{o}{\PYZhy{}} \PY{n}{condition\PYZus{}entropy}
+              
+              \PY{c+c1}{\PYZsh{} 计算最大的信息增益对应的特征}
+              \PY{k}{def} \PY{n+nf}{best\PYZus{}gain}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{data}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{count} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+                  \PY{n}{entropy\PYZus{}val} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{entropy}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+                  \PY{n}{best\PYZus{}feature} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{count}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{i\PYZus{}gain} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{gain}\PY{p}{(}\PY{n}{entropy\PYZus{}val}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{condition\PYZus{}entropy}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{n}{i}\PY{p}{)}\PY{p}{)}
+                      \PY{n}{best\PYZus{}feature}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{i\PYZus{}gain}\PY{p}{)}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} 比较大小}
+                  \PY{n}{best\PYZus{}index} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{best\PYZus{}feature}\PY{p}{,} \PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x} \PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{return} \PY{n}{best\PYZus{}index}
+              
+              \PY{c+c1}{\PYZsh{} 训练}
+              \PY{k}{def} \PY{n+nf}{train}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{train\PYZus{}data}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{features} \PY{o}{=} \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+                  \PY{c+c1}{\PYZsh{} 第一步，先判断当前数据集D是否都属于同一类，如果是，表示为单节点树，直接返回当前结点}
+                  \PY{c+c1}{\PYZsh{} value\PYZus{}count()可以返回种类计数}
+                  \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                      \PY{k}{return} \PY{n}{Node}\PY{p}{(}\PY{n}{root}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} 第二步，如果特征集为空，则当前为单节点树，将D中最多的类别作为该节点的类标记，返回}
+                  \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{features}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                      \PY{k}{return} \PY{n}{Node}\PY{p}{(}\PY{n}{root}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} 第三步，计算得到最大的信息增益对应的特征}
+                  \PY{n}{max\PYZus{}feature}\PY{p}{,} \PY{n}{max\PYZus{}gain} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{best\PYZus{}gain}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{train\PYZus{}data}\PY{p}{)}\PY{p}{)}
+                  \PY{n}{max\PYZus{}feature\PYZus{}name} \PY{o}{=} \PY{n}{features}\PY{p}{[}\PY{n}{max\PYZus{}feature}\PY{p}{]}
+                  
+                  \PY{c+c1}{\PYZsh{} 第四步，如果当前的信息增益小于阈值，就进行树的划分，并将当前数据集中最大的类别作为类标记，返回树}
+                  \PY{k}{if} \PY{n}{max\PYZus{}gain} \PY{o}{\PYZlt{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{epsilon}\PY{p}{:}
+                      \PY{k}{return} \PY{n}{Node}\PY{p}{(}\PY{n}{root}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                  \PY{c+c1}{\PYZsh{} 第五步,构建子树}
+                  \PY{n}{tree} \PY{o}{=} \PY{n}{Node}\PY{p}{(}\PY{n}{root}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{feature\PYZus{}name}\PY{o}{=}\PY{n}{max\PYZus{}feature\PYZus{}name}\PY{p}{,} \PY{n}{feature}\PY{o}{=}\PY{n}{max\PYZus{}feature}\PY{p}{)}
+                  \PY{n}{feature\PYZus{}list} \PY{o}{=} \PY{n}{train\PYZus{}data}\PY{p}{[}\PY{n}{max\PYZus{}feature\PYZus{}name}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{index}
+                  
+                  \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n}{feature\PYZus{}list}\PY{p}{:}
+                      \PY{n}{sub\PYZus{}train\PYZus{}data} \PY{o}{=} \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{train\PYZus{}data}\PY{p}{[}\PY{n}{max\PYZus{}feature\PYZus{}name}\PY{p}{]} \PY{o}{==} \PY{n}{f}\PY{p}{]}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{n}{max\PYZus{}feature\PYZus{}name}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                      \PY{c+c1}{\PYZsh{} 递归生成树}
+                      \PY{n}{sub\PYZus{}tree} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{sub\PYZus{}train\PYZus{}data}\PY{p}{)}
+                      \PY{n}{tree}\PY{o}{.}\PY{n}{insert\PYZus{}node}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{sub\PYZus{}tree}\PY{p}{)}
+                      
+                  \PY{k}{return} \PY{n}{tree}
+              
+              \PY{k}{def} \PY{n+nf}{fit}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{train\PYZus{}data}\PY{p}{)}\PY{p}{:}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}tree} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{train}\PY{p}{(}\PY{n}{train\PYZus{}data}\PY{p}{)}
+                  \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}tree}
+              
+              \PY{k}{def} \PY{n+nf}{predict}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}tree}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{1.4 模型训练}\label{ux6a21ux578bux8badux7ec3}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}140}]:} \PY{n}{dt} \PY{o}{=} \PY{n}{DecisionTree}\PY{p}{(}\PY{p}{)}
+          \PY{n}{tree} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}data}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{1.5
+模型评估，计算测试集上的分类准确度}\label{ux6a21ux578bux8bc4ux4f30ux8ba1ux7b97ux6d4bux8bd5ux96c6ux4e0aux7684ux5206ux7c7bux51c6ux786eux5ea6}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}141}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{accuracy\PYZus{}score}
+          
+          \PY{n}{y\PYZus{}predicts} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{drop\PYZus{}index} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+              \PY{k}{try}\PY{p}{:}
+                  \PY{n}{y\PYZus{}predict} \PY{o}{=} \PY{n}{dt}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{y\PYZus{}predicts}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{y\PYZus{}predict}\PY{p}{)}
+              \PY{k}{except} \PY{n+ne}{KeyError}\PY{p}{:}
+                  \PY{c+c1}{\PYZsh{} 将对应真实标签序列中的值删去}
+                  \PY{n}{drop\PYZus{}index}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{drop\PYZus{}index}\PY{p}{)}
+          \PY{n}{y\PYZus{}test\PYZus{}new} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{drop\PYZus{}index}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y\PYZus{}predicts}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{int}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{测试集分类准确度为：}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test\PYZus{}new}\PY{p}{,} \PY{n}{y\PYZus{}predicts}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0, 3, 10, 13, 14, 17, 22, 30, 34]
+[0 2 1 0 2 2 0 0 1 1 2 0 0 1 1 2 0 2 0 2 0 2 2 2 0 2 0 0 0]
+测试集分类准确度为： 0.9310344827586207
+
+    \end{Verbatim}
+
+    \subsubsection{2.使用sklearn中的CART方式建树}\label{ux4f7fux7528sklearnux4e2dux7684cartux65b9ux5f0fux5efaux6811}
+
+    \paragraph{2.1 重新加载数据}\label{ux91cdux65b0ux52a0ux8f7dux6570ux636e}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}159}]:} \PY{n}{iris} \PY{o}{=} \PY{n}{datasets}\PY{o}{.}\PY{n}{load\PYZus{}iris}\PY{p}{(}\PY{p}{)}
+          
+          \PY{n}{X} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{data}
+          \PY{n}{y} \PY{o}{=} \PY{n}{iris}\PY{o}{.}\PY{n}{target}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(150, 4) (150,)
+
+    \end{Verbatim}
+
+    \paragraph{2.2
+为了方便绘制分类后的决策边界，这里只取两个特征}\label{ux4e3aux4e86ux65b9ux4fbfux7ed8ux5236ux5206ux7c7bux540eux7684ux51b3ux7b56ux8fb9ux754cux8fd9ux91ccux53eaux53d6ux4e24ux4e2aux7279ux5f81}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}160}]:} \PY{n}{X} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(150, 2) (150,)
+
+    \end{Verbatim}
+
+    \paragraph{2.3 模型训练}\label{ux6a21ux578bux8badux7ec3}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}161}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{tree} \PY{k}{import} \PY{n}{DecisionTreeClassifier}
+          
+          \PY{c+c1}{\PYZsh{} 这里传入gini作为评价指标，使用CART方式构建树}
+          \PY{n}{dt\PYZus{}clf} \PY{o}{=} \PY{n}{DecisionTreeClassifier}\PY{p}{(}\PY{n}{criterion}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gini}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{dt\PYZus{}clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}161}]:} DecisionTreeClassifier(class\_weight=None, criterion='gini', max\_depth=None,
+                      max\_features=None, max\_leaf\_nodes=None,
+                      min\_impurity\_decrease=0.0, min\_impurity\_split=None,
+                      min\_samples\_leaf=1, min\_samples\_split=2,
+                      min\_weight\_fraction\_leaf=0.0, presort=False, random\_state=None,
+                      splitter='best')
+\end{Verbatim}
+            
+    \paragraph{4.模型评估，绘制分类决策边界}\label{ux6a21ux578bux8bc4ux4f30ux7ed8ux5236ux5206ux7c7bux51b3ux7b56ux8fb9ux754c}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}162}]:} \PY{c+c1}{\PYZsh{} 绘制分类决策边界  }
+          
+          \PY{k}{def} \PY{n+nf}{plot\PYZus{}decision\PYZus{}boundary}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{axis}\PY{p}{)}\PY{p}{:}
+              
+              \PY{n}{x0}\PY{p}{,} \PY{n}{x1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}
+                  \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                  \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{p}{(}\PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{axis}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+              \PY{p}{)}
+              \PY{n}{X\PYZus{}new} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{x0}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{x1}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+          
+              \PY{n}{y\PYZus{}predict} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}new}\PY{p}{)}
+              \PY{n}{zz} \PY{o}{=} \PY{n}{y\PYZus{}predict}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{x0}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+          
+              \PY{k+kn}{from} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{colors} \PY{k}{import} \PY{n}{ListedColormap}
+              \PY{n}{custom\PYZus{}cmap} \PY{o}{=} \PY{n}{ListedColormap}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}EF9A9A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}FFF59D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}90CAF9}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              
+              \PY{n}{plt}\PY{o}{.}\PY{n}{contourf}\PY{p}{(}\PY{n}{x0}\PY{p}{,} \PY{n}{x1}\PY{p}{,} \PY{n}{zz}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{custom\PYZus{}cmap}\PY{p}{)}
+              
+          \PY{n}{plot\PYZus{}decision\PYZus{}boundary}\PY{p}{(}\PY{n}{dt\PYZus{}clf}\PY{p}{,} \PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{7.5}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{y}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{y}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{y}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{y}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{X}\PY{p}{[}\PY{n}{y}\PY{o}{==}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{X}\PY{p}{[}\PY{n}{y}\PY{o}{==}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+d:\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}contour.py:960: UserWarning: The following kwargs were not used by contour: 'linewidth'
+  s)
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    从上图中可以看出决策树可以大致的进行数据分类，但是上图中黄色部分的边界明显发生了过拟合，可以通过剪枝来减少过拟合的程度
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
