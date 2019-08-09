@@ -1,3 +1,4 @@
+# 定义向量类，实现简单的向量运算，重载相关运算符
 class Vector:
 
     def __init__(self, lst):
