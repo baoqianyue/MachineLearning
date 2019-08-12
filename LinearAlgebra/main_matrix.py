@@ -27,3 +27,5 @@ if __name__ == "__main__":
     # 模拟二维平面中一个三角形
     P = Matrix([[0, 4, 5], [0, 0, 3]])
     print("T.dot(P) = {}".format(T.dot(P)))
+
+    print("P.T = {}".format(P.T()))

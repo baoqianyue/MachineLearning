@@ -38,6 +38,11 @@ class Matrix:
         r, c = self.shape()
         return r * c
 
+    def T(self):
+        """返回矩阵转置结果"""
+        # 直接将矩阵的第i列中的每个元素作为转置矩阵的第i行的每个元素
+        return Matrix([[e for e in self.col_vector(i)] for i in range(self.col_num())])
+
     def __getitem__(self, pos):
         """该魔法方法传入一个参数元组,返回具体的某一个元素"""
         r, c = pos
