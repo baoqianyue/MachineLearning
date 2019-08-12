@@ -76,6 +76,22 @@ class Matrix:
         """返回矩阵数量乘的结果: k * self"""
         return self * k
 
+    def dot(self, another):
+        """返回矩阵乘法的结果"""
+        if isinstance(another, Vector):
+            # 矩阵与向量的乘法
+            assert self.col_num() == len(another), \
+                "Error in Matrix-Vector multiplication"
+            # 返回一个向量,矩阵的列数要等于向量的元素个数
+            return Vector([self.col_vector(i).dot(another) for i in range(self.row_num())])
+        if isinstance(another, Matrix):
+            # 矩阵与矩阵的乘法
+            assert self.col_num() == another.row_num(), \
+                "Error in Matrix-Matrix multiplication"
+            # A.dot(B),内层循环B的列数，外层循环A的行数
+            return Matrix([[self.row_vector(i).dot(another.col_vector(j)) for j in range(another.col_num())]
+                           for i in range(self.row_num())])
+
     def __truediv__(self, k):
         """返回矩阵数量除的结果: self / k"""
         return (1 / k) * self

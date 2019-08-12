@@ -1,4 +1,5 @@
 from getLA.Matrix import Matrix
+from getLA.Vector import Vector
 
 if __name__ == "__main__":
     mat = Matrix([[2, 3], [2, 1]])
@@ -16,3 +17,13 @@ if __name__ == "__main__":
     print("mul:mat * 2 = {}".format(mat * 2))
     print("scalar-mul: 2 * mat = {}".format(2 * mat))
     print("zero_2_3: {}".format(Matrix.zero(2, 3)))
+
+    # 模拟转换矩阵(函数)
+    T = Matrix([[1.5, 0], [0, 2]])
+    # 模拟二维平面中某点坐标
+    p = Vector([5, 3])
+    print("T.dot(p) = {}".format(T.dot(p)))
+
+    # 模拟二维平面中一个三角形
+    P = Matrix([[0, 4, 5], [0, 0, 3]])
+    print("T.dot(P) = {}".format(T.dot(P)))

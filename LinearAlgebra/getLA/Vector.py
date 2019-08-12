@@ -1,3 +1,6 @@
+import math
+
+
 # 定义向量类，实现简单的向量运算，重载相关运算符
 class Vector:
 
@@ -21,6 +24,12 @@ class Vector:
         assert len(self) == len(another), \
             "Error in subtracting, Length of vectors must be same"
         return Vector([a - b for a, b in zip(self, another)])
+
+    def dot(self, another):
+        """向量点乘，返回结果标量"""
+        assert len(self) == len(another), \
+            "Error in dot product, length of vectors must be same"
+        return sum(a * b for a, b in zip(self, another))
 
     def __mul__(self, k):
         """向量数乘, self * k"""
