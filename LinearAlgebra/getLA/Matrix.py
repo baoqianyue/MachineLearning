@@ -18,6 +18,15 @@ class Matrix:
         # 每行重复c次
         return cls([[0] * c for _ in range(r)])
 
+    @classmethod
+    def identity(cls, n):
+        """返回一个nxn的单位矩阵"""
+        # 先构建一个n个0构成的向量，然后该向量重复n行
+        m = [[0] * n for _ in range(n)]
+        for i in range(n):
+            m[i][i] = 1
+        return cls(m)
+
     def shape(self):
         """返回矩阵的形状:(行数，列数)"""
         return (len(self._values), len(self._values[0]))

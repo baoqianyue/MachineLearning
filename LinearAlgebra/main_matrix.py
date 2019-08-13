@@ -29,3 +29,9 @@ if __name__ == "__main__":
     print("T.dot(P) = {}".format(T.dot(P)))
 
     print("P.T = {}".format(P.T()))
+
+    I = Matrix.identity(2)
+    print("I = {}".format(I))
+
+    print("mat.dot(I) = {}".format(mat.dot(I)))
+    print("I.dot(mat) = {}".format(I.dot(mat)))
