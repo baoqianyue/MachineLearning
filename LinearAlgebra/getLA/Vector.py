@@ -31,6 +31,10 @@ class Vector:
             "Error in dot product, length of vectors must be same"
         return sum(a * b for a, b in zip(self, another))
 
+    def underlying_list(self):
+        """返回向量的底层列表的拷贝"""
+        return self._values[:]
+
     def __mul__(self, k):
         """向量数乘, self * k"""
         return Vector([k * e for e in self])
@@ -38,6 +42,10 @@ class Vector:
     def __rmul__(self, k):
         """向量数乘, k * self"""
         return self * k
+
+    def __truediv__(self, k):
+        """向量数量除法, self / k"""
+        return (1 / k) * self
 
     def __pos__(self):
         """返回向量取正的结果"""
