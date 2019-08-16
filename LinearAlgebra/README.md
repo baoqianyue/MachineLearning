@@ -63,7 +63,7 @@
         n维空间应该用n个轴来定义，也就是用n维方阵来表示。     
           
 
-## [线性系统](./getLA/LinearSystem.py)         
+## [线性系统](getLA/SimpleLinearSystem.py)         
 
 * 高斯消元法(Gauss Elimination)          
 
@@ -79,7 +79,7 @@
     *缺点*：     
     * 当化简完成后，最后一行的主元位置为1，且其之前的所有元素都为0，根据此，可以直接得到方程组中最后一个未知数的取值，然后还需要根据这个未知数的值向上回代到其他的方程中求剩余的几个未知数的值，有什么办法可以直接在矩阵化简之后，直接将所有的未知数的值读出来，这就要用到下面的**高斯-约旦消元法**。     
 
-* [高斯-约旦消元法(Gauss-Jordan Elimination)](./getLA/LinearSystem.py)        
+* [高斯-约旦消元法(Gauss-Jordan Elimination)](getLA/LinearSystem.py)        
 
     * 前向过程(从上到下)     
 
@@ -115,7 +115,7 @@
         ![jie](./img/jiejiegou.png)   
 
 
-        
+
 
         
         

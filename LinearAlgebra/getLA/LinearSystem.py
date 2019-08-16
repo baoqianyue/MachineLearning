@@ -1,77 +1,77 @@
 from .Matrix import Matrix
 from .Vector import Vector
+from ._global import is_zero
 
 
 # 在该线性系统中模拟高斯-约旦消元法
-# 目前有三个限制：1. 系数矩阵的行数m必须等于未知数的数目n
-# 2. 系数矩阵的每一行的主元都不为0
-# 3. 每个线性系统都有唯一解
+# 消元法后得到当前增广矩阵的行最简形式，可以判断线性系统是否有解
 class LinearSystem:
 
     def __init__(self, A, b):
         """构建增广矩阵，用户无需关系增广矩阵的构建，只需传入系数矩阵A和结果向量b"""
         assert A.row_num() == len(b), \
             "row number of A must be equal to the length of b"
-        # 之后需多次访问，这里将这两个参数作为线性系统的一个属性
         self._m = A.row_num()
         self._n = A.col_num()
-        assert self._m == self._n  # 限制1 TODO:no this restriction
 
-        # 增广矩阵，先返回矩阵A每一个行向量(需要list类型才能够拼接元素)，然后拼接上b向量中的某个元素
         self.Ab = [Vector(A.row_vector(i).underlying_list() + [b[i]])
                    for i in range(self._m)]
+        # 保存每行的主元所在的列数
+        self.pivots = []
 
-    def _max_row(self, index, n):
-        """从index行到第n行查找主元(index，index)最大的行向量"""
-        # 初始时保存最佳主元和主元所在行数
-        best, target = self.Ab[index][index], index
-        for i in range(index + 1, n):
-            # 若当前行对应的主元值大于best，则更新best和目标行数target
-            if self.Ab[i][index] > best:
-                best, target = self.Ab[i][index], i
+    def _max_row(self, i_index, j_index, n):
+        best, target = self.Ab[i_index][j_index], i_index
+        for i in range(i_index + 1, n):
+            if self.Ab[i][j_index] > best:
+                best, target = self.Ab[i][j_index], i
         return target
 
     def _forward(self):
         """高斯-约旦消元法的前向操作"""
-        n = self._m
-        # 外层循环每次不仅向下推进，还会将主元的位置向右推进一位
-        # 每次循环首先确定了该行的主元为self.Ab[i][i]
-        for i in range(n):
-            # 1. 先将主元最大的行向量提到第一行
-            max_row = self._max_row(i, n)
-            # 交换两行
+        # i指向当前处于第i行，k指向当前的主元所在列数
+        i, k = 0, 0
+        while i < self._m and k < self._n:
+            # 看self.Ab[i][k]位置是否可以是主元,先找该列最大的元素
+            max_row = self._max_row(i, k, self._m)
             self.Ab[i], self.Ab[max_row] = self.Ab[max_row], self.Ab[i]
 
-            # 2. 将主元化简为1
-            self.Ab[i] = self.Ab[i] / self.Ab[i][i]  # TODO:self.Ab[i][i] == 0?
-            # 3. 将主元下面的所有行都减去主元所在行的某个倍数，使主元下面的所有元素都为0
-            for j in range(i + 1, n):
-                # 将当前主元下面的元素消为0，对应主元列数的元素乘上主元所在的行向量(主元现在为1)
-                self.Ab[j] = self.Ab[j] - self.Ab[i] * self.Ab[j][i]
+            # 判断当前行的主元位置是否为0，如果为0，主元位置向右推进一位
+            if is_zero(self.Ab[i][k]):
+                k += 1
+            else:
+                # 将主元化简为1
+                self.Ab[i] = self.Ab[i] / self.Ab[i][k]
+                # 将主元下面的所有行都减去主元所在行的某个倍数，使主元下面的所有元素都为0
+                for j in range(i + 1, self._m):
+                    self.Ab[j] = self.Ab[j] - self.Ab[j][k] * self.Ab[i]
+                # 将当前行的主元位置保存
+                self.pivots.append(k)
+                i += 1
 
     def _backward(self):
         """高斯-约旦消元法的后向操作"""
-        n = self._m
-        # 从下面往上遍历
-        # 外层循环每次将主元的位置向左推进一位
-        # 每次循环确定了该行的主元为self.Ab[i][i]
+        # 判断主元个数
+        n = len(self.pivots)
         for i in range(n - 1, -1, -1):
-            # 内层循环将主元上面的所有元素都化为0
+            # 取出主元
+            k = self.pivots[i]
+            # 主元为self.Ab[i][k]
             for j in range(i - 1, -1, -1):
-                # 主元上面的所有行减去主元所在行的某个倍数(每一行的第i列，对应着主元所在的列数)
-                self.Ab[j] = self.Ab[j] - self.Ab[i] * self.Ab[j][i]
+                self.Ab[j] = self.Ab[j] - self.Ab[i] * self.Ab[j][k]
 
     def gauss_jordan_elimination(self):
-        """执行高斯-约旦消元法"""
+        """如果当前线性系统有解，返回True，如果无解，返回False"""
         self._forward()
         self._backward()
 
+        # 根据增广矩阵判断是否有解
+        for i in range(len(self.pivots), self._m):
+            if not is_zero(self.Ab[i][-1]):
+                return False
+        return True
+
     def fancy_print(self):
         """打印当前的增广矩阵"""
-
         for i in range(self._m):
             print(" ".join(str(self.Ab[i][j]) for j in range(self._n)), end=" ")
             print("|", self.Ab[i][-1])
-
-
-
