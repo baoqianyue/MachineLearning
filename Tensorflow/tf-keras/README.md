@@ -60,5 +60,6 @@
     ![demo](./img/boarddemo.png)   
 
 
+### [Keras构建回归模型](./tf_keras_regression.ipynb)     
 
-
+模型搭建过程类似与分类模型    
