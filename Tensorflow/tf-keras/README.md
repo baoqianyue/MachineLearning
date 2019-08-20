@@ -106,6 +106,8 @@
 
 * [Wide-Deep模型函数式API实现](./tf_keras_regression_wide_deep.ipynb)     
 * [keras子类实现](./tf_keras_regression_wide_deep_subclass.ipynb)   
+* [keras多输入实现](./tf_keras_regression_wide_deep_multi_input.ipynb)    
+
 
     
 
