@@ -202,10 +202,45 @@ LeCun提出，用来解决手写数字识别问题
 * 网络碎片化(GoogleNet中的inception结构)会降低并行效率   
 * 像素级运算不可忽视(如ResNet中的short cut相加操作)   
 
-        
+## Siamese Net(孪生网络)     
+该网络是一种相似性度量网络，适用于数据集中含有较多的类别，但是每个类别中的样本数量较少的情况，siamese网络会从这种数据集中学习一个相似性度量，用这个学习到的度量与比较和匹配新的未知类别的样本，来达到相似性计算的目的，可以用于判断两幅图像是否是同一个人的人脸图像。        
+
+该网络由两个完全相同的子卷积网络构成，这两个子网络共享相同的权值参数  
+![siamesenet](./imgs/siamesenet.png)    
+
+网络的输入数据为**一组图像**对和一个**相似标签构成**，该图像对由两个样本构成，不再给每个图像一个具体的标签，而是给图像对设置一个是否属于同一个类别的标签，属于一个类别，标签就是0，否则就是1   
+
+两幅图像通过两个子卷积网络后，输出两个特征向量，也可以看作是将两幅图像映射到了一个目标空间中，在该空间中使用欧式距离(余弦距离)来计算相似度，在训练阶段，最大化来自不同类别的一组样本的loss，最小化来自相同类别的一组样本的loss      
+
+## Triplet Net    
+网络输入为三个图像，一个正例+两个负例，或者一个负例+两个正例，训练的目标是使相同类别的两幅图像距离尽可能小，不同类别的两幅图像距离尽可能大，如下图：   
+
+![triplet net](./imgs/tripetnet.png)      
+
+## SENet(CNN中的Attention机制)   
+SeNet属于Channel Attention的一种实现      
+
+* Attention机制   
+    模拟人类大脑在接受和处理外界信号时的一种选择机制，人类会自动的选择一段信号中的某些特殊信号，而这些特殊信号往往是这一整段信号中最具代表性的，attention机制就是在机器执行任务时，也能重点关注一幅图像中，或者一段话中比较有代表性的地方来执行，可以极大提高机器推断执行的效率    
+    
+    **attention机制在实际操作中就是加权处理**(todo,有可能不准确)    
+
+    * 保留所有分量做加权(soft attention)   
+    * 在分布中以某种策略选取部分分量(hard attention)  
+        这些分量一般为：原图、特征图、空间尺度、通道、特征图上的每个元素、不同历史时刻   
+
+* SENet    
+    ![senet](./imgs/senet.png)     
+    SENet是对图像Channel做attention操作，即对图像Channel做加权处理，具体每个通道的权值是通过se-module学习得到的，两种module如下图：    
+
+    ![se module](./imgs/senetblock.png)    
+
 ## 参考   
 
-[你必须要知道CNN模型：ResNet](https://zhuanlan.zhihu.com/p/31852747)   
+* [你必须要知道CNN模型：ResNet](https://zhuanlan.zhihu.com/p/31852747)    
+* [无需数学背景，读懂 ResNet、Inception 和 Xception 三大变革性架构](https://www.jiqizhixin.com/articles/2017-08-19-4)   
+* [Siamese network 孪生神经网络--一个简单神奇的结构](https://zhuanlan.zhihu.com/p/35040994)    
+
 
 
        
