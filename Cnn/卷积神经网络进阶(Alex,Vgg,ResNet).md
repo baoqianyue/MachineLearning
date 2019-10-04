@@ -91,7 +91,7 @@ LeCun提出，用来解决手写数字识别问题
 
     这个方法在AlexNet中有很大的优化作用，但是在其他网络中并没有很大的贡献，而且已经被BatchNormalization和Dropout操作所取代      
 
-## GoogleNet/Inception v1   
+## GoogleNet/Inception v1(2014)     
 主要考虑增加网络的宽度，将这种宽网络结构定义为Inception结构(一种网中网Network In Network)    
 
 ![inception](./imgs/inception.png)   
@@ -171,10 +171,37 @@ LeCun提出，用来解决手写数字识别问题
 
 * ResNet的变种网络   
     * ResNeXt(分组卷积)   
-    * DenseNet(加入了更多的skip connection)   
+    * DenseNet(加入了更多的short cut)      
     * Wide-ResNet(加大网络宽度)   
     * ResNet In ResNet(网中网结构)   
-    * Inception-ResNet(Inception结构)   
+    * Inception-ResNet(Inception结构)    
+
+## MobileNet(2017)    
+使用深度、宽度可分离卷积(对输入图像的channel进行分组)的方式代替传统卷积，以达到减少网络权值参数的目的   
+
+* Depthwise Convolution   
+    ![depthconv](./imgs/depthconv.png)  
+    将一个标准卷积核按照channel数量进行分组和拆分   
+
+* Pointwise Convolution    
+    ![pointconv](./imgs/pointconv.png)  
+    将一个标准卷积核的size缩减为1x1卷积，称为点卷积      
+
+## ShuffleNet  
+旷世科技提出，使用深度卷积(Depthwise Convolution)代替标准卷积，同时在进行卷积操作之前，对输入数据channel进行shuffle，这样可以学习到图像通道间的联系    
+
+## ShuffleNet v2   
+旷世科技针对ShuffleNet改进的轻量级卷积神经网络，该网络发表在ECCV2018    
+
+该模型最大的贡献是提出和分析了如何设计轻量级卷积神经网络的标准和规范   
+
+* 相同的通道宽度可以最小化内存访问成本(MAC)   
+    在设计卷积层的通道数量时，应尽可能的统一channel数量   
+
+* 过度的分组卷积会增加(MAC)     
+* 网络碎片化(GoogleNet中的inception结构)会降低并行效率   
+* 像素级运算不可忽视(如ResNet中的short cut相加操作)   
+
         
 ## 参考   
 
