@@ -10,4 +10,9 @@
 
 ## [Tensorflow](./Tensorflow/README.md)   
 
-* Tensorflow-Keras使用    
+* Tensorflow-Keras使用      
+
+## [Misc](./Misc/01.md)    
+* One-Hot编码    
+* 损失函数分类   
+* 超参数搜索

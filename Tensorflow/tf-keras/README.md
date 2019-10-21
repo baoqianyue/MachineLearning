@@ -154,7 +154,63 @@
     model.compile(loss='mean_squared_error', optimizer='sgd')
     callbacks = [keras.callbacks.EarlyStopping(patience=5, min_delta=1e-2)]
     ```
-* [keras多输入实现](./tf_keras_regression_wide_deep_multi_input.ipynb)    
+* [keras多输入实现](./tf_keras_regression_wide_deep_multi_input.ipynb)   
+
+* [keras中使用sklearn进行超参数搜索](./tf_keras_regression-hp-search-sklearn.ipynb)    
+    ```python
+    # 使用Randomized Search 
+    # 1.将模型转换为sklearn格式   
+    # 2.定义超参数集合 
+    # 3.搜索参数
+
+    def build_model(hidden_layers=1,
+                    layer_size=30,
+                    learning_rate=3e-3):
+        model = keras.models.Sequential()
+        model.add(keras.layers.Dense(layer_size, 
+                                    activation='relu',
+                                    input_shape=X_train.shape[1:]))
+        for _ in range(hidden_layers - 1):
+            model.add(keras.layers.Dense(layer_size,
+                                        activation='relu'))
+        model.add(keras.layers.Dense(1))
+        opt = keras.optimizers.SGD(learning_rate)
+        model.compile(loss='mean_squared_error', optimizer=opt)
+        return model
+
+    sk_model = keras.wrappers.scikit_learn.KerasRegressor(build_fn=build_model)
+    callbacks = [keras.callbacks.EarlyStopping(patience=5, min_delta=1e-2)]
+    log_his = sk_model.fit(X_train_scaled, y_train,
+                epochs=10,
+                validation_data=(X_valid_scaled, y_valid),
+                callbacks=callbacks)
+
+    # 定义超参数集合
+    from scipy.stats import reciprocal
+    # f(x) = 1/(x*log(b/a)) a <= x <= b
+
+    params_distribution = {
+        "hidden_layers":[1, 2, 3, 4],
+        "layer_size" : np.arange(1, 100),
+        "learning_rate": reciprocal(1e-4, 1e-2),
+    }
+
+    from sklearn.model_selection import RandomizedSearchCV
+
+    # n_iters表示共组成多少组超参数
+    # cv表示cross validation时划分数据集份数
+    random_search_cv = RandomizedSearchCV(sk_model,
+                                        params_distribution,
+                                        n_iter=10,
+                                        cv=3,
+                                        n_jobs=1)
+
+    random_search_cv.fit(X_train_scaled, y_train,
+                        epochs=100,
+                        validation_data=(X_valid_scaled, y_valid),
+                        callbacks=callbacks)
+    ```
+
 
 
     
