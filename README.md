@@ -10,10 +10,12 @@
 
 ## [Tensorflow](./Tensorflow/README.md)     
 
-* Tensorflow基础API使用   
+* [Tensorflow基础API使用](./Tensorflow/tf-basic-api/README.md)       
+    * tf2.0数据类型   
+    * 使用子类继承和lambda方式自定义layer    
 
 
-* Tensorflow-Keras使用     
+* [Tensorflow-Keras使用](./Tensorflow/tf-keras/README.md)  
     TF2.0下的Keras模型搭建Demo      
     * 分类模型    
     * 回归模型    
