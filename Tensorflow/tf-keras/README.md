@@ -105,7 +105,55 @@
         * 过度泛化时，会推荐错误的产品      
 
 * [Wide-Deep模型函数式API实现](./tf_keras_regression_wide_deep.ipynb)     
-* [keras子类实现](./tf_keras_regression_wide_deep_subclass.ipynb)   
+    ```python
+    # 模型构建,使用keras 函数式Api
+    input_layer = keras.layers.Input(shape=X_train.shape[1:])
+    # 定义好层，后面括号中填入输入参数
+    # 这里的hidden相当于是deep模型
+    hidden1 = keras.layers.Dense(30, activation='relu')(input_layer)
+    hidden2 = keras.layers.Dense(30, activation='relu')(hidden1)
+
+    # 将wide和deep模型合并然后进行输出层处理，这里的wide模型直接以输入inputs代替
+    concat = keras.layers.concatenate([input_layer, hidden2])
+    output = keras.layers.Dense(1)(concat)
+
+    # 上面只是将模型的层数固定好，但是并没有实现模型的固化
+    model = keras.models.Model(inputs=[input_layer],
+                            outputs=[output])
+
+    model.summary()
+    model.compile(loss='mean_squared_error', optimizer='sgd')
+    callbacks = [keras.callbacks.EarlyStopping(patience=5, min_delta=1e-2)]
+    ```
+* [keras子类实现](./tf_keras_regression_wide_deep_subclass.ipynb)    
+    ```python
+    # 继承keras.models.Model
+    class WideDeepModel(keras.models.Model):
+        def __init__(self):
+            # 先调用父类构造函数
+            super(WideDeepModel, self).__init__()
+            """定义模型的层次,然后可以以函数调用的方式来调用这些层次"""
+            self._hidden1_layer = keras.layers.Dense(30, activation='relu')
+            self._hidden2_layer = keras.layers.Dense(30, activation='relu')
+            self._output_layer = keras.layers.Dense(1)
+            
+        def call(self, input):
+            """完成模型的正向传播"""
+            hidden1 = self._hidden1_layer(input)
+            hidden2 = self._hidden2_layer(hidden1)
+            concat = keras.layers.concatenate([input, hidden2])
+            output = self._output_layer(concat)
+            return output
+
+    # 定义模型对象
+    model = WideDeepModel()
+    # build用来指定模型输入的shape,相当于定义模型的输入层 model.add(keras.layers.Input(input_shape=[None, 8]))
+    model.build(input_shape=(None, 8))
+
+    model.summary()
+    model.compile(loss='mean_squared_error', optimizer='sgd')
+    callbacks = [keras.callbacks.EarlyStopping(patience=5, min_delta=1e-2)]
+    ```
 * [keras多输入实现](./tf_keras_regression_wide_deep_multi_input.ipynb)    
 
 
