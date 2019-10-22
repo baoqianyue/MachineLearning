@@ -12,7 +12,8 @@
 
 * [Tensorflow基础API使用](./Tensorflow/tf-basic-api/README.md)       
     * tf2.0数据类型   
-    * 使用子类继承和lambda方式自定义layer    
+    * 使用子类继承和lambda方式自定义layer     
+    * @tf.function使用   
 
 
 * [Tensorflow-Keras使用](./Tensorflow/tf-keras/README.md)  
