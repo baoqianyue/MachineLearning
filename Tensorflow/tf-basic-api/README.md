@@ -176,5 +176,59 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
         # optimizers.apply_gradients方法传参是一个列表，列表元素是tuple，每个tuple对应一个目标变量和它的导数
         opt.apply_gradients([(dz_dx, x)])
     print(x)
-    ```
+    ```  
+
+### [keras手动优化实现](./tf_keras_regression_customized_diffs.ipynb)   
+```python
+# 模型优化过程，即fit函数的操作：
+# 1. 使用batch的形式遍历数据集，并计算loss和其他metric
+#    1.1 自动求导
+# 2. 每个epoch结束后，在验证集上测试
+
+# 定义相关变量
+epochs = 100
+batch_size = 32
+steps_per_epoch = len(X_train_scaled) // batch_size
+opt = keras.optimizers.SGD()
+# 定义metric
+metric = keras.metrics.MeanSquaredError()
+
+# 取数据,fit函数中的batch获取会首先对数据集进行shuffle
+def random_batch(x, y, batch_size=32):
+    random_idx = np.random.randint(0, len(X_train_scaled), size=batch_size)
+    return x[random_idx], y[random_idx]    
+
+# 模型构建
+model = keras.models.Sequential()
+model.add(keras.layers.Dense(30, activation='relu',
+                             input_shape=X_train_scaled.shape[1:]))
+model.add(keras.layers.Dense(1))
+
+
+# 模型优化
+for epoch in range(epochs):
+    metric.reset_states()
+    for step in range(steps_per_epoch):
+        X_batch, y_batch = random_batch(X_train_scaled,
+                                        y_train,
+                                        batch_size)
+        with tf.GradientTape() as tape:
+            y_pred = model(X_batch)
+            # 上一步求得的y_pred维度为(32, 1), 而y_batch的维度为(32, )
+            y_pred = tf.squeeze(y_pred, 1)
+            loss = keras.losses.mean_squared_error(y_batch, y_pred)
+            metric(y_pred, y_batch)
+        # 对所有参数求导
+        grads = tape.gradient(loss, model.variables)
+        # 对grads和参数进行打包
+        grads_and_vars = zip(grads, model.variables)
+        opt.apply_gradients(grads_and_vars)
+        print("\rEpoch", epoch, "train mse:", 
+              metric.result().numpy(), end='')
+    # 每个epoch结束后，计算在验证集上的metric
+    y_valid_pred = model(X_valid_scaled)
+    y_valid_pred = tf.squeeze(y_valid_pred, 1)
+    valid_loss = keras.losses.mean_squared_error(y_valid_pred, y_valid)
+    print("\t valid mse: ", valid_loss.numpy())
+```
 
