@@ -129,5 +129,52 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
     # 通过name获取op或者tensor，这个name可以在定义时指定
     cube_func_int32.graph.get_operation_by_name('x')
     cube_func_int32.graph.get_tensor_by_name('x:0')
+    ```  
+
+### [tf.GradientTape实现自定义求导](./tf_diffs.ipynb)    
+如果多次使用tape求导，需要在定义时将`persistent`参数设置为True   
+* tf.GradientTape求一阶导    
+    ```python
+    x1 = tf.Variable(2.)
+    x2 = tf.Variable(3.)
+    with tf.GradientTape(persistent=True) as tape:
+        z = g(x1, x2)
+    dz_x1 = tape.gradient(z, x1)
+    dz_x2 = tape.gradient(z, x2)
+    print(dz_x1, dz_x2)
+
+    # 手动释放tape
+    del tape
+    ```    
+
+* tf.GradientTape嵌套求二阶导数   
+    ```python
+    x1 = tf.Variable(2.)
+    x2 = tf.Variable(3.)
+    with tf.GradientTape(persistent=True) as outer_tape:
+        with tf.GradientTape(persistent=True) as inner_tape:
+            z = g(x1, x2)
+        inner_grads = inner_tape.gradient(z, [x1, x2])
+    outer_grads = [outer_tape.gradient(inner_grads, [x1, x2])
+                for inner_grad in inner_grads]
+    print(outer_grads)
+    del inner_tape
+    del outer_tape
+    ```   
+
+* tf.GradientTape结合keras.optimizers使用   
+    ```python
+    learning_rate = 0.1
+    x = tf.Variable(0.0)
+
+    opt = keras.optimizers.SGD(learning_rate)
+
+    for _ in range(100):
+        with tf.GradientTape() as tape:
+            z = f(x)
+        dz_dx = tape.gradient(z, x)
+        # optimizers.apply_gradients方法传参是一个列表，列表元素是tuple，每个tuple对应一个目标变量和它的导数
+        opt.apply_gradients([(dz_dx, x)])
+    print(x)
     ```
 
