@@ -26,7 +26,11 @@
     * 函数式API    
     * 子类模型实现API   
     * 多输入输出模型实现     
-    * TensorBoard      
+    * TensorBoard        
+
+* [Tensorflow-data使用](./Tensorflow/tf-data/README.md)  
+    * tf.data.Dataset.from_tensor_slices构建数据集   
+    
 
 ## [Misc](./Misc/01.md)    
 * One-Hot编码    
