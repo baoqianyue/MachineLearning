@@ -78,7 +78,8 @@ fabric.properties
 *.iml
 modules.xml
 .idea/misc.xml
-*.ipr
+*.ipr  
 
+Tensorflow/tf-data/generate_csv/
 
 # End of https://www.gitignore.io/api/pycharm+all,jupyternotebook
