@@ -32,8 +32,10 @@
     * tf.data.Dataset.from_tensor_slices构建数据集    
     * 生成csv文件     
     
+## [Pytorch](./Pytorch/README.md)   
+
 
 ## [Misc](./Misc/01.md)    
 * One-Hot编码    
 * 损失函数分类   
-* 超参数搜索
+* 超参数搜索  
